@@ -8,28 +8,32 @@ class DataLoader():
     def __init__(self):
         self.data = None
 
-    def load_dataset(self, path="data/healthcare-dataset-stroke-data.csv"):
+    def load_dataset(self, path="Data/Default_payment.csv"):
         self.data = pd.read_csv(path)
+
+    
+
 
     def preprocess_data(self):
         # One-hot encode all categorical columns
-        categorical_cols = ["gender",
-                            "ever_married",
-                            "work_type",
-                            "Residence_type",
-                            "smoking_status"]
-        encoded = pd.get_dummies(self.data[categorical_cols], 
-                                prefix=categorical_cols)
+        categorical_cols = ['JOB_TYPE', 'SEX', 'MARRIAGE', 'EDUCATION']
+        encoded = pd.get_dummies(self.data[categorical_cols],
+                                  columns=categorical_cols)
+        
+        
 
         # Update data with new columns
         self.data = pd.concat([encoded, self.data], axis=1)
         self.data.drop(categorical_cols, axis=1, inplace=True)
 
-        # Impute missing values of BMI
-        self.data.bmi = self.data.bmi.fillna(0)
+        # # Impute missing values of X
+        self.data = self.data.fillna(0)
+
+
+        
         
         # Drop id as it is not relevant
-        self.data.drop(["id"], axis=1, inplace=True)
+        #self.data.drop(["id"], axis=1, inplace=True)
 
         # Standardization 
         # Usually we would standardize here and convert it back later
