@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 from utils import DataLoader
 
+
 # %% Load data
 data_loader = DataLoader()
 data_loader.load_dataset()
